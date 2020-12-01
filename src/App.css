@@ -1,5 +1,5 @@
 body {
-  background-color: honeydew;
+  background-color: rgb(99, 206, 248);
 }
 
 .App {
@@ -38,7 +38,7 @@ h1 {
   background-color: whitesmoke;
   width: 200px;
   height: 150px;
-  box-shadow: 0 20px 20px -10px gray;
+  box-shadow: 0 20px 20px -10px rgb(4, 73, 100);
   text-align: center;
   border-radius: 6px;
 }
