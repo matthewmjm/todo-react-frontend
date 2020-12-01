@@ -1,10 +1,10 @@
 import React from 'react'
 import TodoItem from './TodoItem'
 
-function TodoContainer({todos}){
+function TodoContainer({todos, deleteTodo}){
 
     const showTodos = () => {
-        return todos.map(todo => <TodoItem key={todo.id} {...todo} />)
+        return todos.map(todo => <TodoItem key={todo.id} {...todo} deleteTodo={deleteTodo} />)
     }
 
     return (

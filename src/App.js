@@ -24,6 +24,24 @@ class App extends React.Component {
     this.setState({
       todos: [...this.state.todos, newTodo]
     })
+
+    fetch(todosUrl, {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newTodo)
+    })
+  }
+
+  deleteTodo = (id) => {
+    let filtered = this.state.todos.filter(todo => todo.id !== id)
+    this.setState({
+      todos: filtered
+    })
+
+    fetch(todosUrl + id, {method: "DELETE"})
   }
 
   render(){
@@ -31,7 +49,7 @@ class App extends React.Component {
       <div className="App">
         <h1>🗣 Todo App 📝</h1>
         <TodoForm  addTodo={this.addTodo} />
-        <TodoContainer todos={this.state.todos} />
+        <TodoContainer todos={this.state.todos} deleteTodo={this.deleteTodo} />
       </div>
     );
   }
