@@ -59,3 +59,9 @@ h1 {
   background-color: rgb(235, 231, 30);
   color: black;
 }
+
+.close-button {
+  background-color: rgb(225, 51, 51);
+  font-weight: bold;
+  color: white;
+}
