@@ -31,7 +31,21 @@ class App extends React.Component {
         "Accept": "application/json",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(newTodo)
+      body: JSON.stringify({todo: newTodo})
+    })
+  }
+
+  updateTodo = (updatedTodo) => {
+    let todos = this.state.todos.map(todo => todo.id === updatedTodo.id ? updatedTodo : todo)
+    this.setState( { todos })
+
+    fetch(todosUrl + updatedTodo.id, {
+      method: "PATCH",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({todo: updatedTodo})
     })
   }
 
@@ -48,8 +62,8 @@ class App extends React.Component {
     return (
       <div className="App">
         <h1>🗣 Todo App 📝</h1>
-        <TodoForm  addTodo={this.addTodo} />
-        <TodoContainer todos={this.state.todos} deleteTodo={this.deleteTodo} />
+        <TodoForm  submitAction={this.addTodo} />
+        <TodoContainer todos={this.state.todos} deleteTodo={this.deleteTodo} updateTodo={this.updateTodo} />
       </div>
     );
   }
