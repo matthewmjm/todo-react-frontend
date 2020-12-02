@@ -2,7 +2,7 @@ import React from 'react'
 import './App.css';
 import TodoForm from './components/TodoForm'
 import TodoContainer from './components/TodoContainer'
-import { patchTodo, postTodo } from './helpers'
+import { patchTodo, postTodo, deleteTodo } from './helpers'
 const todosUrl = "http://localhost:4000/todos/"
 
 class App extends React.Component {
@@ -40,7 +40,7 @@ class App extends React.Component {
       todos: filtered
     })
 
-    fetch(todosUrl + id, {method: "DELETE"})
+    deleteTodo(id)
   }
 
   render(){

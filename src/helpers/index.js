@@ -13,7 +13,7 @@ export function patchTodo(updatedTodo){
 }
 
 export function postTodo(newTodo){
-    
+
     fetch(todosUrl, {
         method: "POST",
         headers: {
@@ -22,4 +22,9 @@ export function postTodo(newTodo){
         },
         body: JSON.stringify({todo: newTodo})
     })
+}
+
+
+export function deleteTodo(id) {
+    fetch(todosUrl + id, {method: "DELETE"})
 }
