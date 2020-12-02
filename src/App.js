@@ -2,6 +2,7 @@ import React from 'react'
 import './App.css';
 import TodoForm from './components/TodoForm'
 import TodoContainer from './components/TodoContainer'
+import { patchTodo, postTodo } from './helpers'
 const todosUrl = "http://localhost:4000/todos/"
 
 class App extends React.Component {
@@ -24,29 +25,13 @@ class App extends React.Component {
     this.setState({
       todos: [...this.state.todos, newTodo]
     })
-
-    fetch(todosUrl, {
-      method: "POST",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({todo: newTodo})
-    })
+    postTodo(newTodo)
   }
 
   updateTodo = (updatedTodo) => {
     let todos = this.state.todos.map(todo => todo.id === updatedTodo.id ? updatedTodo : todo)
     this.setState( { todos })
-
-    fetch(todosUrl + updatedTodo.id, {
-      method: "PATCH",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({todo: updatedTodo})
-    })
+    patchTodo(updatedTodo)
   }
 
   deleteTodo = (id) => {
