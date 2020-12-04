@@ -1,9 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 function SignUpForm(props) {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [login, setLogin] = useState(false)
+
+    useEffect(() => {
+        localStorage.removeItem('token')
+    }, [])
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -12,8 +16,11 @@ function SignUpForm(props) {
             password
         }
 
-        props.signUp(user)
-            .then(() => props.history.push('/'))
+        login 
+            ? props.login(user)
+                .then(() => props.history.push('/'))
+            : props.signUp(user)
+                .then(() => props.history.push('/'))
     }
 
     const handleChange = ({target}) => {
