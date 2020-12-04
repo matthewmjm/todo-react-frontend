@@ -18,14 +18,34 @@ class App extends React.Component {
     alerts: []
   }
 
-  componentDidMount(){
-    this.getTodos()
-  }
+  // componentDidMount(){
+  //   this.getTodos()
+  // }
   
-  getTodos = () => {
-    fetch(todosUrl)
-      .then(response => response.json())
-      .then(todos => this.setState({todos}))
+  // getTodos = () => {
+  //   fetch(todosUrl)
+  //     .then(response => response.json())
+  //     .then(todos => this.setState({todos}))
+  // }
+
+  componentDidMount(){
+    this.authorize_user()
+  }
+
+  authorize_user = () => {
+    fetch("http://localhost:4000/profile", {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${localStorage.token}`
+      }
+    })
+    .then(response => response.json())
+    .then(response => {
+      this.setState({
+        user: response.user,
+        todos: response.todos
+      })
+    })
   }
 
   addTodo = (newTodo) => {
@@ -68,7 +88,8 @@ class App extends React.Component {
         localStorage.setItem('token', response.token)
         this.setState({
           user: response.user,
-          alerts: ["User successfully logged-in!"]
+          alerts: ["User successfully logged-in!"],
+          todos: response.todos
         })
       }
     })
@@ -92,7 +113,8 @@ class App extends React.Component {
         localStorage.setItem('token', response.token)
         this.setState({
           user: response.user,
-          alerts: ["User successfully created!"]
+          alerts: ["User successfully created!"],
+          todos: response.todos
         })
       }
     })
