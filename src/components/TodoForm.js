@@ -37,10 +37,11 @@ class TodoForm extends Component {
     }
 
     handleSubmit = (event) => {
+        let {submitAction, handleToggle} = this.props
         event.preventDefault()
-        this.props.submitAction(this.state)
-        if(this.props.handleToggle){
-            this.props.handleToggle()
+        submitAction(this.state)
+        if(handleToggle){
+            handleToggle()
         }
     }
 
@@ -61,7 +62,7 @@ class TodoForm extends Component {
     }
 
     render(){
-        const {title, content, urgent} = this.state
+        const {title, content, urgent, done} = this.state
         return (
             <form className="todo-form" onSubmit={this.handleSubmit} >
                 {this.props.todo ? <h2>Edit Todo Item</h2> : <h2>Create a New Todo</h2>}

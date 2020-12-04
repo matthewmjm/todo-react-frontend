@@ -7,6 +7,7 @@ import { patchTodo, postTodo, deleteTodo } from './helpers'
 import {Route, Switch, Redirect, Link} from 'react-router-dom'
 import PrivateRoute from './components/PrivateRoute'
 import Home from './components/Home'
+import Login from './components/Login'
 const todosUrl = "http://localhost:4000/todos/"
 const usersUrl = "http://localhost:4000/users/"
 
@@ -18,18 +19,10 @@ class App extends React.Component {
     alerts: []
   }
 
-  // componentDidMount(){
-  //   this.getTodos()
-  // }
-  
-  // getTodos = () => {
-  //   fetch(todosUrl)
-  //     .then(response => response.json())
-  //     .then(todos => this.setState({todos}))
-  // }
-
   componentDidMount(){
-    this.authorize_user()
+    if(localStorage.token){
+      this.authorize_user()
+    }
   }
 
   authorize_user = () => {
@@ -52,7 +45,7 @@ class App extends React.Component {
     this.setState({
       todos: [...this.state.todos, newTodo]
     })
-    postTodo(newTodo)
+    postTodo(newTodo, this.state.user)
   }
 
   updateTodo = (updatedTodo) => {
@@ -129,7 +122,7 @@ class App extends React.Component {
             <>
               <p>Welcome Back {this.state.user.username}</p>
               <nav>
-                <Link to="./signup">Logout</Link>
+                <Link to="/signup">Logout</Link>
               </nav>
             </>
             )
@@ -148,6 +141,9 @@ class App extends React.Component {
           />
           <Route exact path="/signup" render={(routerProps) => {
             return <SignUpForm {...routerProps} login={this.login} signUp={this.signUp} alerts={this.state.alerts}/>} 
+          }/>
+          <Route exact path="/login" render={(routerProps) => {
+            return <Login {...routerProps} login={this.login} alerts={this.state.alerts}/>} 
           }/>
           <Redirect to="/" />
         </Switch>
