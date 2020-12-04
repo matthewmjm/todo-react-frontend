@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 
 function SignUpForm(props) {
     const [username, setUsername] = useState("")
@@ -12,6 +12,7 @@ function SignUpForm(props) {
         }
 
         props.signUp(user)
+            .then(() => props.history.push('/'))
     }
 
     const handleChange = ({target}) => {
